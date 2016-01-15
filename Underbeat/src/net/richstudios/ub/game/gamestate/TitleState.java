@@ -14,7 +14,7 @@ public class TitleState extends GameState {
 	}
 
 	public void init() {
-		
+
 	}
 
 	public void update() {
@@ -24,8 +24,9 @@ public class TitleState extends GameState {
 	public void draw(Graphics2D g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, References.WIDTH, References.HEIGHT);
-		int titleWidth = Textures.getTexture("title").getWidth() * 6;
-		int titleHeight = Textures.getTexture("title").getHeight() * 6;
+		
+		int titleWidth = (int) (Textures.getTexture("title").getWidth() * 6 + (Math.sin(System.currentTimeMillis() / 100) * 3));
+		int titleHeight = (int) (Textures.getTexture("title").getHeight() * 6.1 + (Math.sin(System.currentTimeMillis() / 100) * 7));
 		g.drawImage(Textures.getTexture("title"), References.WIDTH / 2 - titleWidth / 2, References.HEIGHT / 2 - titleHeight / 2 - 10, titleWidth, titleHeight, null);
 	}
 
