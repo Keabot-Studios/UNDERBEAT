@@ -7,7 +7,7 @@ public class References {
 	public static final int FPS = 30;
 
 	// GRAPHICS
-	public static final int WIDTH = 640;
-	public static final int HEIGHT = 480;
+	public static final int WIDTH = 645;
+	public static final int HEIGHT = 510;
 
 }

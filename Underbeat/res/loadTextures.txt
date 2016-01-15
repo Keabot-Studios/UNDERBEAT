@@ -1,5 +1,11 @@
 -gui-
+title
 disclaimer
+main
 -sprite-
 sansShrug
+brokenSoul
+heartShard
+soul
+note
 -tileset-

@@ -3,6 +3,7 @@ package net.richstudios.ub.game.gamestate;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import net.richstudios.ub.game.gamestate.transitions.SpecialFadeState;
 import net.richstudios.ub.game.loading.Textures;
 import net.richstudios.ub.util.InputHandler;
 import net.richstudios.ub.util.References;
@@ -29,7 +30,9 @@ public class DisclaimerState extends GameState {
 	}
 
 	public void handleInput(InputHandler input) {
-
+		if(input.confirmKeyTyped()) {
+			gsm.set(new SpecialFadeState(gsm, this, new TitleState(gsm), Color.BLACK, 1f));
+		}
 	}
 
 }
