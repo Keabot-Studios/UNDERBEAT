@@ -1,11 +1,12 @@
 -gui-
 title
+titleNote
 disclaimer
 main
 -sprite-
 sansShrug
 brokenSoul
-heartShard
+soulShard
 soul
 note
 -tileset-

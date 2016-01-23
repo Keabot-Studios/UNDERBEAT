@@ -19,14 +19,13 @@ public class DisclaimerState extends GameState {
 	}
 
 	public void update() {
-		
 	}
 
 	public void draw(Graphics2D g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, References.WIDTH, References.HEIGHT);
-		g.drawImage(Textures.getTexture("disclaimer"), References.WIDTH / 2 - Textures.getTexture("disclaimer").getWidth() / 2, References.HEIGHT / 2 - Textures.getTexture("disclaimer").getHeight() / 2, null);
-		g.drawImage(Textures.getTexture("sansShrug"), 500, 300, (int)(Textures.getTexture("sansShrug").getWidth() / 1.5), (int)(Textures.getTexture("sansShrug").getHeight() / 1.5), null);
+		g.drawImage(Textures.getTexture("disclaimer"), References.WIDTH / 2 - Textures.getTexture("disclaimer").getWidth() / 2, References.HEIGHT / 2 - Textures.getTexture("disclaimer").getHeight() / 2 - 70, null);
+		g.drawImage(Textures.getTexture("sansShrug"), (References.WIDTH / 2) - (Textures.getTexture("sansShrug").getWidth() / 2), 340, null);
 	}
 
 	public void handleInput(InputHandler input) {
