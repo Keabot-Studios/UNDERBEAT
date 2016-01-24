@@ -3,7 +3,7 @@ package net.richstudios.ub.game.objects;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import net.richstudios.ub.util.References;
+import net.richstudios.ub.util.ref.References;
 
 public class Board extends GameObject {
 	

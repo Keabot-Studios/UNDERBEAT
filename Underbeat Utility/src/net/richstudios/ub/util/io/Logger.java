@@ -1,4 +1,4 @@
-package net.richstudios.ub.util;
+package net.richstudios.ub.util.io;
 
 public class Logger {
 	public enum Level {

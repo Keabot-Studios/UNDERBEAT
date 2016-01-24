@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<level>
+	<name>Test Level</name>
+	<author>Rich Studios</author>
+	<song>
+		<difficulty>1</difficulty>
+		<artist>Rich Studios</artist>
+		<notes>
+			<note type="normal" line="0" delay="1000"/>
+			<note type="normal" line="3" delay="2000"/>
+			<note type="normal" line="2" delay="3000"/>
+			<note type="normal" line="0" delay="4000"/>
+			<note type="normal" line="2" delay="5000"/>
+			<note type="hold" line="3" delay="6000" length="3000"/>
+		</notes>
+	</song>
+	<visual>
+	</visual>
+	<script>#SCRIPT GOES IN HERE</script>
+</level>

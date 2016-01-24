@@ -3,8 +3,8 @@ package net.richstudios.ub.game.objects;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import net.richstudios.ub.util.References;
 import net.richstudios.ub.util.level.song.Song;
+import net.richstudios.ub.util.ref.References;
 
 public class BeatBoard extends GameObject {
 

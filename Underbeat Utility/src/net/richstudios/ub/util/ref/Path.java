@@ -1,4 +1,4 @@
-package net.richstudios.ub.util;
+package net.richstudios.ub.util.ref;
 
 public class Path {
 	public static final String TEXTURES = "/textures";

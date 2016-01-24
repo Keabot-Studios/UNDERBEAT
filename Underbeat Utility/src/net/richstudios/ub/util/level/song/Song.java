@@ -5,13 +5,13 @@ import net.richstudios.ub.util.level.song.note.Note;
 public class Song {
 	
 	private String name;
-	private String author;
+	private String artist;
 	private Note[] notes;
 	
-	public Song(String name, String author, Note[] notes) {
+	public Song(String name, String artist, Note[] notes) {
 		super();
 		this.name = name;
-		this.author = author;
+		this.artist = artist;
 		this.notes = notes;
 	}
 
@@ -23,12 +23,12 @@ public class Song {
 		this.name = name;
 	}
 
-	public String getAuthor() {
-		return author;
+	public String getArtist() {
+		return artist;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setArtist(String artist) {
+		this.artist = artist;
 	}
 
 	public Note[] getNotes() {

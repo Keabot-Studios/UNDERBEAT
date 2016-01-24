@@ -5,9 +5,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import net.richstudios.ub.game.loading.Textures;
-import net.richstudios.ub.util.ImageUtils;
-import net.richstudios.ub.util.References;
+import net.richstudios.ub.util.graphics.ImageUtils;
 import net.richstudios.ub.util.level.song.note.Note.NoteLine;
+import net.richstudios.ub.util.ref.References;
 
 public class Heart extends GameObject {
 	

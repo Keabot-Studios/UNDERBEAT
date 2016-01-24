@@ -9,8 +9,8 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-import net.richstudios.ub.util.Logger;
-import net.richstudios.ub.util.Path;
+import net.richstudios.ub.util.io.Logger;
+import net.richstudios.ub.util.ref.Path;
 
 public class Sound {
 

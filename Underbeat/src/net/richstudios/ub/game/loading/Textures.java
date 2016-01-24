@@ -9,8 +9,8 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 
 import net.richstudios.ub.game.Game;
-import net.richstudios.ub.util.Logger;
-import net.richstudios.ub.util.Path;
+import net.richstudios.ub.util.io.Logger;
+import net.richstudios.ub.util.ref.Path;
 
 public class Textures {
 

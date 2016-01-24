@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import net.richstudios.ub.game.gamestate.GameState;
 import net.richstudios.ub.game.gamestate.GameStateManager;
-import net.richstudios.ub.util.References;
+import net.richstudios.ub.util.ref.References;
 
 public class BoxTransitionState extends TransitionState {
 

@@ -1,4 +1,4 @@
-package net.richstudios.ub.util;
+package net.richstudios.ub.util.io;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;

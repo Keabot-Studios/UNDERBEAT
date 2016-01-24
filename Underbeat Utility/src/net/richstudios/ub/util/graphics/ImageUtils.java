@@ -1,4 +1,4 @@
-package net.richstudios.ub.util;
+package net.richstudios.ub.util.graphics;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;

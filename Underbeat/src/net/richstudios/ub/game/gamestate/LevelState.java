@@ -2,7 +2,7 @@ package net.richstudios.ub.game.gamestate;
 
 import java.awt.Graphics2D;
 
-import net.richstudios.ub.util.InputHandler;
+import net.richstudios.ub.util.io.InputHandler;
 
 public class LevelState extends GameState {
 

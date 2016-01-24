@@ -1,4 +1,4 @@
-package net.richstudios.ub.util;
+package net.richstudios.ub.util.ref;
 
 public class References {
 
@@ -9,5 +9,8 @@ public class References {
 	// GRAPHICS
 	public static final int WIDTH = 645;
 	public static final int HEIGHT = 510;
+	
+	// FILE
+	public static final String LEVEL_FILE_EXTENTION = "ubl";
 
 }

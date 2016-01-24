@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 
 import net.richstudios.ub.game.gamestate.transitions.SpecialFadeState;
 import net.richstudios.ub.game.loading.Textures;
-import net.richstudios.ub.util.InputHandler;
-import net.richstudios.ub.util.References;
+import net.richstudios.ub.util.io.InputHandler;
+import net.richstudios.ub.util.ref.References;
 
 public class DisclaimerState extends GameState {
 

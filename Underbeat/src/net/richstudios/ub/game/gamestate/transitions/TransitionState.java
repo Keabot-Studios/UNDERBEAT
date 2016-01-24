@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 import net.richstudios.ub.game.gamestate.GameState;
 import net.richstudios.ub.game.gamestate.GameStateManager;
-import net.richstudios.ub.util.InputHandler;
+import net.richstudios.ub.util.io.InputHandler;
 
 public abstract class TransitionState extends GameState {
 

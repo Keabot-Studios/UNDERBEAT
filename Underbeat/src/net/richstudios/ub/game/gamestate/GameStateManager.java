@@ -3,7 +3,7 @@ package net.richstudios.ub.game.gamestate;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
-import net.richstudios.ub.util.InputHandler;
+import net.richstudios.ub.util.io.InputHandler;
 
 public class GameStateManager {
 
