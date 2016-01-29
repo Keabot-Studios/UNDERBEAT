@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<level>
-	<name>Test Level</name>
-	<author>Rich Studios</author>
-	<song>
-		<difficulty>1</difficulty>
-		<artist>Rich Studios</artist>
+<level name="Test Level" author="Rich Studios">
+	<song difficulty="1" artist="Rich Studios" name="Test Song">
 		<notes>
 			<note type="normal" line="0" delay="1000"/>
 			<note type="normal" line="3" delay="2000"/>

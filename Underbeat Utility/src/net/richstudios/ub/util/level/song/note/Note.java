@@ -28,6 +28,15 @@ public abstract class Note {
 		public Color getColor() {
 			return color;
 		}
+		
+		public static NoteLine getLineFromId(byte id) {
+			for(int i = 0; i < values().length; i++) {
+				if(values()[i].getId() == id) {
+					return values()[i];
+				}
+			}
+			return null;
+		}
 	}
 	
 	public enum NoteType {
