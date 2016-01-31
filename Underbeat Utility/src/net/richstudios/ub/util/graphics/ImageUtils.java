@@ -3,6 +3,10 @@ package net.richstudios.ub.util.graphics;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
+
+import net.richstudios.ub.util.io.Logger;
+
 public class ImageUtils {
 
 	public static BufferedImage replaceColors(BufferedImage image, Color[] from, Color[] to) {
@@ -35,5 +39,15 @@ public class ImageUtils {
 
 	public static Color[] getWhiteScale() {
 		return new Color[] { new Color(255, 255, 255), new Color(128, 128, 128), new Color(64, 64, 64), new Color(0, 0, 0) };
+	}
+	
+	public static BufferedImage loadImageRaw(String path) {
+		try {
+			Logger.info("Loading image: " + path);
+			return ImageIO.read(ImageUtils.class.getResourceAsStream(path));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

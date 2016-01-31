@@ -6,18 +6,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import javax.imageio.ImageIO;
-
-import net.richstudios.ub.game.Game;
-import net.richstudios.ub.util.io.Logger;
+import net.richstudios.ub.util.graphics.ImageUtils;
 import net.richstudios.ub.util.ref.Path;
 
 public class Textures {
 
 	// ICONS
-	public static final BufferedImage icon16x = loadImageRaw("/icon16.png");
-	public static final BufferedImage icon32x = loadImageRaw("/icon32.png");
-	public static final BufferedImage icon64x = loadImageRaw("/icon64.png");
+	public static final BufferedImage icon16x = ImageUtils.loadImageRaw("/icon16.png");
+	public static final BufferedImage icon32x = ImageUtils.loadImageRaw("/icon32.png");
+	public static final BufferedImage icon64x = ImageUtils.loadImageRaw("/icon64.png");
 
 	private static HashMap<String, BufferedImage> textures;
 	private static HashMap<String, BufferedImage[][]> spriteSheets;
@@ -28,24 +25,14 @@ public class Textures {
 		loadTextures();
 	}
 
-	public static BufferedImage loadImageRaw(String path) {
-		try {
-			Logger.info("Loading image: " + path);
-			return ImageIO.read(Game.class.getResourceAsStream(path));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	private static void loadImage(String path, String name) {
-		BufferedImage i = loadImageRaw(path);
+		BufferedImage i = ImageUtils.loadImageRaw(path);
 		textures.put(name, i);
 		texturesLoaded++;
 	}
 
 	private static void loadSpritesheet(String path, String name, Dimension d) {
-		BufferedImage i = loadImageRaw(path);
+		BufferedImage i = ImageUtils.loadImageRaw(path);
 		int width = (int) d.getWidth();
 		int height = (int) d.getHeight();
 		int numtilesX = i.getWidth() / width;
