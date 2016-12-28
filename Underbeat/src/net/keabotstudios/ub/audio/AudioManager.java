@@ -16,6 +16,7 @@ public class AudioManager {
 
 	public AudioManager() {
 		new JFXPanel();
+		audio = new HashMap<String, URL>();
 	}
 
 	private HashMap<String, URL> audio;
@@ -43,7 +44,8 @@ public class AudioManager {
 	}
 
 	public void stop() {
-		player.stop();
+		if (player != null)
+			player.stop();
 		player = null;
 		playing = false;
 	}
