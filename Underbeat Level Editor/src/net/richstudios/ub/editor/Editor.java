@@ -1,37 +1,43 @@
 package net.richstudios.ub.editor;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
-import org.omg.PortableServer.ServantRetentionPolicyOperations;
-import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.AbstractListModel;
+import javax.swing.border.LineBorder;
 import javax.swing.border.BevelBorder;
-import java.awt.Component;
-import javax.swing.Box;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EtchedBorder;
+import javax.swing.JSplitPane;
+import java.awt.Font;
 
 public class Editor extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTabbedPane tabs;
+	private VisualPane viewPane;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -60,7 +66,7 @@ public class Editor extends JFrame {
 		setTitle("UNDERBEAT Level Editor");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 701, 500);
-		setMinimumSize(new Dimension(400, 300));
+		setMinimumSize(new Dimension(800, 600));
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBackground(Color.LIGHT_GRAY);
@@ -108,19 +114,89 @@ public class Editor extends JFrame {
 		contentPane.add(tabs, BorderLayout.CENTER);
 		
 		SongPane songPane = new SongPane();
-		tabs.addTab("Song", new ImageIcon(Editor.class.getResource("/icons/notePane.png")), songPane, null);
+		tabs.addTab("Notes", new ImageIcon(Editor.class.getResource("/icons/notePane.png")), songPane, null);
+		songPane.setLayout(new BorderLayout(0, 0));
+		
+		JScrollBar scrollBar = new JScrollBar();
+		scrollBar.setOrientation(JScrollBar.HORIZONTAL);
+		songPane.add(scrollBar, BorderLayout.NORTH);
 		
 		JPanel eventPane = new JPanel();
 		tabs.addTab("Events", new ImageIcon(Editor.class.getResource("/icons/eventPane.png")), eventPane, null);
 		
 		JPanel visualPane = new JPanel();
 		tabs.addTab("Visual", new ImageIcon(Editor.class.getResource("/icons/visualPane.png")), visualPane, null);
+		visualPane.setLayout(new BorderLayout(0, 0));
+		
+		viewPane = new VisualPane();
+		visualPane.add(viewPane, BorderLayout.CENTER);
+		
+		JPanel rightPanel = new JPanel();
+		rightPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		visualPane.add(rightPanel, BorderLayout.EAST);
+		rightPanel.setLayout(new BorderLayout(0, 0));
+		
+		JToolBar visualToolBar = new JToolBar();
+		visualToolBar.setOrientation(SwingConstants.VERTICAL);
+		rightPanel.add(visualToolBar, BorderLayout.WEST);
+		visualToolBar.setFloatable(false);
+		
+		JButton btnNewButton = new JButton("New Part");
+		visualToolBar.add(btnNewButton);
+		btnNewButton.setToolTipText("Add Part");
+		btnNewButton.setIcon(new ImageIcon(Editor.class.getResource("/icons/addPart.png")));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		
+		JButton btnRemovePart = new JButton("Remove Part");
+		btnRemovePart.setToolTipText("Remove Part");
+		btnRemovePart.setIcon(new ImageIcon(Editor.class.getResource("/icons/removePart.png")));
+		visualToolBar.add(btnRemovePart);
+		
+		JButton btnDuplicate = new JButton("Duplicate Part");
+		btnDuplicate.setIcon(new ImageIcon(Editor.class.getResource("/icons/duplicatePart.png")));
+		visualToolBar.add(btnDuplicate);
+		
+		JButton btnSetSpritesheet = new JButton("Load Spritesheet");
+		btnSetSpritesheet.setIcon(new ImageIcon(Editor.class.getResource("/icons/loadSpritesheet.png")));
+		btnSetSpritesheet.setToolTipText("Load Spritesheet");
+		visualToolBar.add(btnSetSpritesheet);
+		
+		JPanel listPanel = new JPanel();
+		rightPanel.add(listPanel, BorderLayout.CENTER);
+		listPanel.setLayout(new BorderLayout(0, 0));
+		
+		JList partList = new JList();
+		partList.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		listPanel.add(partList);
+		partList.setForeground(Color.WHITE);
+		partList.setBackground(Color.BLACK);
+		partList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		partList.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		partList.setModel(new AbstractListModel() {
+			String[] values = new String[] {"L Arm", "R Arm", "Torso"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+		
+		Component horizontalGlue_2 = Box.createHorizontalGlue();
+		listPanel.add(horizontalGlue_2, BorderLayout.NORTH);
+		
+		SpriteSheetPane spriteSheetPane = new SpriteSheetPane();
+		spriteSheetPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		rightPanel.add(spriteSheetPane, BorderLayout.SOUTH);
 		
 		JToolBar toolBar = new JToolBar();
 		toolBar.setFloatable(false);
 		toolBar.setBackground(Color.BLACK);
 		toolBar.setForeground(new Color(0, 0, 0));
-		contentPane.add(toolBar, BorderLayout.NORTH);
+		contentPane.add(toolBar, BorderLayout.SOUTH);
 		
 		JButton btnNew = new JButton("");
 		btnNew.setSelectedIcon(new ImageIcon(Editor.class.getResource("/icons/newIconSel.png")));
@@ -146,6 +222,12 @@ public class Editor extends JFrame {
 		btnSave.setBackground(Color.BLACK);
 		btnSave.setIcon(new ImageIcon(Editor.class.getResource("/icons/saveIcon.png")));
 		toolBar.add(btnSave);
+		
+		JButton btnTest = new JButton("");
+		btnTest.setSelectedIcon(new ImageIcon(Editor.class.getResource("/icons/testIconSel.png")));
+		btnTest.setIcon(new ImageIcon(Editor.class.getResource("/icons/testIcon.png")));
+		btnTest.setBackground(Color.BLACK);
+		toolBar.add(btnTest);
 		
 		Component horizontalGlue_1 = Box.createHorizontalGlue();
 		toolBar.add(horizontalGlue_1);

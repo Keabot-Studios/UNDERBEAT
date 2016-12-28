@@ -3,16 +3,20 @@ package net.richstudios.ub.game.gamestate;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
+import net.richstudios.ub.game.Game;
 import net.richstudios.ub.util.io.InputHandler;
 
 public class GameStateManager {
 
+	private Game game;
+	
 	private boolean blockInput = false;
 
 	private InputHandler keys;
 	private LinkedList<GameState> states;
 
-	public GameStateManager(InputHandler keys) {
+	public GameStateManager(Game game, InputHandler keys) {
+		this.game = game;
 		states = new LinkedList<GameState>();
 		this.keys = keys;
 	}
@@ -44,5 +48,9 @@ public class GameStateManager {
 
 	public void blockInput(boolean b) {
 		blockInput = b;
+	}
+	
+	public Game getGame() {
+		return game;
 	}
 }

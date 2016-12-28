@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import net.richstudios.ub.game.gamestate.transitions.SpecialFadeState;
 import net.richstudios.ub.game.loading.Textures;
 import net.richstudios.ub.game.objects.Heart;
 import net.richstudios.ub.util.file.StringUtils;
@@ -16,7 +17,7 @@ public class TitleState extends GameState {
 	private int timer = 0;
 
 	private boolean showingPrompt = false;
-	private static final String PROMPT_STRING = "[PRESS ENTER]";
+	private static final String PROMPT_STRING = "[PRESS Z OR ENTER]";
 	
 	private Heart[] hearts;
 
@@ -68,7 +69,7 @@ public class TitleState extends GameState {
 
 	public void handleInput(InputHandler input) {
 		if (showingPrompt && input.isKeyPressed(InputHandler.ENTER)) {
-			// TODO
+			gsm.set(new SpecialFadeState(gsm, this, new TutorialState(gsm), Color.BLACK, 1f));
 		}
 	}
 

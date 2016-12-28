@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -14,6 +15,8 @@ import net.richstudios.ub.game.gamestate.GameStateManager;
 import net.richstudios.ub.game.loading.Sound;
 import net.richstudios.ub.game.loading.Textures;
 import net.richstudios.ub.util.file.LevelFileParser;
+import net.richstudios.ub.util.file.ParseException;
+import net.richstudios.ub.util.file.WrongFileTypeException;
 import net.richstudios.ub.util.io.InputHandler;
 import net.richstudios.ub.util.level.Level;
 import net.richstudios.ub.util.ref.References;
@@ -69,20 +72,16 @@ public class Game extends JPanel implements Runnable {
 		input = new InputHandler(this);
 		Sound.init();
 		Textures.init();
-		gsm = new GameStateManager(input);
+		gsm = new GameStateManager(this, input);
 		gsm.push(new DisclaimerState(gsm));
 		running = true;
 		
+		Level test;
+		
 		try {
-			Level test = LevelFileParser.parseLocal("testLevel.ubl");
-			System.out.println(test.getName());
-			System.out.println(test.getAuthor());
-			System.out.println(test.getSong().getName());
-			System.out.println(test.getSong().getArtist());
-			for(int i = 0; i < test.getSong().getNotes().length; i++) {
-				System.out.println(test.getSong().getNotes()[i].getType() + ", " + test.getSong().getNotes()[i].getPosition() + ", " + test.getSong().getNotes()[i]);
-			}
+			test = LevelFileParser.parseLocal("testLevel.ubl");
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -131,7 +130,6 @@ public class Game extends JPanel implements Runnable {
 		}
 		Graphics g2 = getGraphics();
 		g2.drawImage(image, 0, 0, References.WIDTH, References.HEIGHT, null);
-		g2.setColor(Color.blue);
 		g2.dispose();
 	}
 

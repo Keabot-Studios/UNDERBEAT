@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE level>
 <level name="Test Level" author="Rich Studios">
-	<song difficulty="1" artist="Rich Studios" name="Test Song">
-		<notes>
-			<note type="normal" line="0" delay="1000"/>
-			<note type="normal" line="3" delay="2000"/>
-			<note type="normal" line="2" delay="3000"/>
-			<note type="normal" line="0" delay="4000"/>
-			<note type="normal" line="2" delay="5000"/>
-			<note type="hold" line="3" delay="6000" length="3000"/>
-		</notes>
+	<resources>
+		<resource type="sound"/>
+		<resource type="graphic" path=""/>
+	</resources>
+	<song difficulty="1" artist="Rich Studios" name="Test Song">]
+		<note type="normal" line="0" position="1000"/>
+		<note type="normal" line="3" position="2000"/>
+		<note type="normal" line="2" position="3000"/>
+		<note type="normal" line="0" position="4000"/>
+		<note type="normal" line="2" position="5000"/>
+		<note type="hold" line="3" position="6000" length="3000"/>
 	</song>
 	<visual>
 	</visual>

@@ -1,18 +1,21 @@
 package net.richstudios.ub.util.level;
 
 import net.richstudios.ub.util.level.song.Song;
+import net.richstudios.ub.util.level.visual.Visual;
 
 public class Level {
 	
 	private String name, author;
 	private Song song;
 	private Visual visual;
+	private int difficulty;
 	
-	public Level(String name, String author, Song song, Visual visual) {
+	public Level(String name, String author, Song song, Visual visual, int difficulty) {
 		this.name = name;
 		this.author = author;
 		this.song = song;
 		this.visual = visual;
+		this.difficulty = difficulty;
 	}
 
 	public String getName() {
@@ -45,6 +48,14 @@ public class Level {
 
 	public void setVisual(Visual visual) {
 		this.visual = visual;
+	}
+	
+	public int getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
 	}
 
 }

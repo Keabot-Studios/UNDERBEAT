@@ -33,7 +33,7 @@ public class LevelFileParser {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document doc = db.parse(f);
-		
+
 		return parse(doc);
 	}
 
@@ -65,42 +65,59 @@ public class LevelFileParser {
 					difficulty = Integer.parseInt(e.getAttribute("difficulty"));
 					NodeList songNodes = e.getChildNodes();
 					for (int j = 0; j < songNodes.getLength(); j++) {
-						Node sn = songNodes.item(i);
+						Node sn = songNodes.item(j);
 						if (sn.getNodeType() == Node.ELEMENT_NODE) {
 							Element se = (Element) sn;
-							if (se.getNodeName() == "notes") {
-								NodeList noteNodes = se.getChildNodes();
-								for (int k = 0; k < noteNodes.getLength(); k++) {
-									Node nn = nodes.item(i);
-									if (nn.getNodeType() == Node.ELEMENT_NODE) {
-										Element ne = (Element) nn;
-										if (ne.getNodeName() == "note") {
-											Note note = null;
-											NoteType type = NoteType.valueOf(ne.getAttribute("type").toUpperCase());
-											long position = Long.parseLong(ne.getAttribute("position"));
-											NoteLine line = null;
-											switch (type) {
-											case NORMAL:
-												line = NoteLine.getLineFromId((byte) Integer.parseInt(ne.getAttribute("line")));
-												note = new NormalNote(line, position);
-												break;
-											case HOLD:
-												line = NoteLine.getLineFromId((byte) Integer.parseInt(ne.getAttribute("line")));
-												long length = Long.parseLong(ne.getAttribute("length"));
-												note = new HoldNote(line, position, length);
-												break;
-											}
-											notes.add(note);
-										}
-									}
+							if (se.getNodeName() == "note") {
+								Note note = null;
+								NoteType type = NoteType.valueOf(se.getAttribute("type").toUpperCase());
+								long position = Long.parseLong(se.getAttribute("position"));
+								NoteLine line = null;
+								switch (type) {
+								case NORMAL:
+									line = NoteLine.getLineFromId((byte) Integer.parseInt(se.getAttribute("line")));
+									note = new NormalNote(line, position);
+									break;
+								case HOLD:
+									line = NoteLine.getLineFromId((byte) Integer.parseInt(se.getAttribute("line")));
+									long length = Long.parseLong(se.getAttribute("length"));
+									note = new HoldNote(line, position, length);
+									break;
 								}
+								notes.add(note);
+							}
+						}
+					}
+				} else if (e.getNodeName() == "visual") {
+					NodeList visualNodes = e.getChildNodes();
+					for (int j = 0; j < visualNodes.getLength(); j++) {
+						Node sn = visualNodes.item(j);
+						if (sn.getNodeType() == Node.ELEMENT_NODE) {
+							Element se = (Element) sn;
+							if (se.getNodeName() == "note") {
+								Note note = null;
+								NoteType type = NoteType.valueOf(se.getAttribute("type").toUpperCase());
+								long position = Long.parseLong(se.getAttribute("position"));
+								NoteLine line = null;
+								switch (type) {
+								case NORMAL:
+									line = NoteLine.getLineFromId((byte) Integer.parseInt(se.getAttribute("line")));
+									note = new NormalNote(line, position);
+									break;
+								case HOLD:
+									line = NoteLine.getLineFromId((byte) Integer.parseInt(se.getAttribute("line")));
+									long length = Long.parseLong(se.getAttribute("length"));
+									note = new HoldNote(line, position, length);
+									break;
+								}
+								notes.add(note);
 							}
 						}
 					}
 				}
 			}
 		}
-		return new Level(Lname, author, new Song(Sname, artist, notes.toArray(new Note[notes.size()])), null);
+		return new Level(Lname, author, new Song(Sname, artist, notes.toArray(new Note[notes.size()])), null, difficulty);
 	}
 
 	public static boolean write(Level l, File f) {

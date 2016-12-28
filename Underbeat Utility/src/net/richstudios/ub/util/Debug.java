@@ -14,6 +14,6 @@ public class Debug {
 			new HoldNote(NoteLine.BLUE, 2000, 3000),
 			new NormalNote(NoteLine.GREEN, 6000),
 			new NormalNote(NoteLine.RED, 6500)
-	}), null);
+	}), null, 2);
 
 }
