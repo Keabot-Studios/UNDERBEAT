@@ -8,11 +8,11 @@ import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.Generated;
 import javax.swing.JFrame;
 
 import net.keabotstudios.superin.Controllable;
@@ -65,15 +65,15 @@ public class Game extends Canvas implements Controllable, Runnable {
 		this.playerInfo = new PlayerInfo();
 		playerInfo.updateFromFile();
 		
-		input = new Input(this, settings.useXInput);
-		input.setInputs(settings.controls);
-		
 		Dimension size = new Dimension(GameInfo.GAME_WIDTH, GameInfo.GAME_HEIGHT);
 		setMinimumSize(size);
 		setPreferredSize(size);
 		setMaximumSize(size);
 
 		createJFrame(currentDisplay);
+		
+		input = new Input(this, settings.useXInput);
+		input.setInputs(settings.controls);
 		
 		if (settings.fullscreen) {
 			calculateFullscreenBounds(currentDisplay);
@@ -128,6 +128,7 @@ public class Game extends Canvas implements Controllable, Runnable {
 		if(running) return;
 		running = true;
 		thread = new Thread(this, GameInfo.TITLE + " Game Thread");
+		thread.start();
 	}
 	
 	public synchronized void stop() {
@@ -148,7 +149,7 @@ public class Game extends Canvas implements Controllable, Runnable {
 		double secsPerTick = 1.0 / (double) GameInfo.MAX_UPS;
 
 		init();
-
+		
 		while (running) {
 			long currTime = System.nanoTime();
 			long elapsedTime = currTime - prevTime;
@@ -178,6 +179,21 @@ public class Game extends Canvas implements Controllable, Runnable {
 	private void update() {
 		GameInfo.update(fps, ups);
 		input.updateControllerInput();
+		System.out.println(input.isKeyboardKeyTyped(KeyEvent.VK_F4));
+		if(input.isKeyboardKeyTyped(KeyEvent.VK_F4)) {
+			GraphicsDevice device = frame.getGraphicsConfiguration().getDevice();
+			frame.dispose();
+			settings.fullscreen = !settings.fullscreen;
+			createJFrame(device);
+			
+			if (settings.fullscreen) {
+				calculateFullscreenBounds(device);
+			}
+			
+			frame.setVisible(true);
+			requestFocus();
+		}
+		
 		input.update();
 	}
 
