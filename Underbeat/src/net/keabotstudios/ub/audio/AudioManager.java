@@ -20,7 +20,7 @@ public class AudioManager {
 		soundAudio = new HashMap<String, MediaPlayer>();
 	}
 
-	private void loadAudio(HashMap<String, MediaPlayer> map, boolean clearCurAudio, boolean loop, String folder,
+	private void loadAudio(HashMap<String, MediaPlayer> map, boolean clearCurAudio, String folder,
 			AudioData... dataList) {
 		if (clearCurAudio)
 			map.clear();
@@ -28,18 +28,18 @@ public class AudioManager {
 			URL res = Game.class.getResource("/" + folder + "/" + data.getName() + ".mp3");
 			Media media = new Media(res.toString());
 			MediaPlayer player = new MediaPlayer(media);
-			player.setCycleCount(loop ? MediaPlayer.INDEFINITE : 1);
+			player.setCycleCount(data.doesLoop() ? MediaPlayer.INDEFINITE : 1);
 			player.stop();
 			map.put(data.getName().toLowerCase(), player);
 		}
 	}
 
-	public void loadSound(boolean clearCurAudio, boolean loop, String folder, AudioData... dataList) {
-		loadAudio(soundAudio, clearCurAudio, loop, folder, dataList);
+	public void loadSound(boolean clearCurAudio, String folder, AudioData... dataList) {
+		loadAudio(soundAudio, clearCurAudio, folder, dataList);
 	}
 
-	public void loadMusic(boolean clearCurAudio, boolean loop, String folder, AudioData... dataList) {
-		loadAudio(musicAudio, clearCurAudio, loop, folder, dataList);
+	public void loadMusic(boolean clearCurAudio, String folder, AudioData... dataList) {
+		loadAudio(musicAudio, clearCurAudio, folder, dataList);
 	}
 
 	private void play(HashMap<String, MediaPlayer> map, String name) {
