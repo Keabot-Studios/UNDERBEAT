@@ -42,6 +42,14 @@ public class AudioManager {
 		loadAudio(musicAudio, clearCurAudio, folder, dataList);
 	}
 
+	public void loadSound(String folder, AudioData... dataList) {
+		loadAudio(soundAudio, false, folder, dataList);
+	}
+
+	public void loadMusic(String folder, AudioData... dataList) {
+		loadAudio(musicAudio, false, folder, dataList);
+	}
+
 	private void play(HashMap<String, MediaPlayer> map, String name) {
 		if (map.containsKey(name.toLowerCase())) {
 			stop(map, name);
