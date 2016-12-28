@@ -74,8 +74,17 @@ public class Game extends Canvas implements Controllable, Runnable {
 		playerInfo.updateFromFile();
 		
 		audioManager = new AudioManager();
-		audioManager.loadAudio("res/audio", "test");
-		audioManager.play("test", false);
+		audioManager.loadAudio("audio/voice", "wav", "sans");
+		//audioManager.play("test", false);
+		for(int i = 0; i <= 50; i++) {
+			audioManager.play("sans", false);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			audioManager.stop();
+		}
 		
 		GameInfo.init(logger);
 

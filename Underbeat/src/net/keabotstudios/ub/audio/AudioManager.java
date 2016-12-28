@@ -21,17 +21,17 @@ public class AudioManager {
 
 	private HashMap<String, URL> audio;
 
-	public void loadAudio(String folder, String... names) {
+	public void loadAudio(String folder, String fileType, String... names) {
 		for (String fileName : names) {
-			System.out.println("Loading Audio: " + "/" + folder + "/" + fileName + ".mp3");
-			audio.put(fileName.toLowerCase(), Game.class.getResource("/" + folder + "/" + fileName + ".mp3"));
+			System.out.println("Loading Audio: " + "/" + folder + "/" + fileName + "." + fileType);
+			audio.put(fileName.toLowerCase(), Game.class.getResource("/" + folder + "/" + fileName + "." + fileType));
 		}
 	}
 
-	public void resetLoadAudio(String folder, String... names) {
+	public void resetLoadAudio(String folder, String fileType, String... names) {
 		audio.clear();
 
-		loadAudio(folder, names);
+		loadAudio(folder, fileType, names);
 	}
 
 	public void play(String name, boolean loop) {
