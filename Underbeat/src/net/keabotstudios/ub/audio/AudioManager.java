@@ -45,7 +45,8 @@ public class AudioManager {
 	}
 
 	public void stop() {
-		player.stop();
+		if (player != null)
+			player.stop();
 		player = null;
 		playing = false;
 	}
