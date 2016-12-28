@@ -20,27 +20,12 @@ public class AudioManager {
 		soundAudio = new HashMap<String, MediaPlayer>();
 	}
 
-	private HashMap<String, URL> audio;
-
-	public void loadAudio(String folder, String fileType, String... names) {
-		for (String fileName : names) {
-			System.out.println("Loading Audio: " + "/" + folder + "/" + fileName + "." + fileType);
-			audio.put(fileName.toLowerCase(), Game.class.getResource("/" + folder + "/" + fileName + "." + fileType));
-		}
-	}
-
-	public void resetLoadAudio(String folder, String fileType, String... names) {
-		audio.clear();
-
-		loadAudio(folder, fileType, names);
-	}
-
-	private void loadAudio(HashMap<String, MediaPlayer> map, boolean clearCurAudio, String folder,
+	private void loadAudio(HashMap<String, MediaPlayer> map, boolean clearCurAudio, String folder, String audioType,
 			AudioData... dataList) {
 		if (clearCurAudio)
 			map.clear();
 		for (AudioData data : dataList) {
-			URL res = Game.class.getResource("/" + folder + "/" + data.getName() + ".mp3");
+			URL res = Game.class.getResource("/" + folder + "/" + data.getName() + "." + audioType);
 			Media media = new Media(res.toString());
 			MediaPlayer player = new MediaPlayer(media);
 			player.setCycleCount(data.doesLoop() ? MediaPlayer.INDEFINITE : 1);
@@ -49,20 +34,20 @@ public class AudioManager {
 		}
 	}
 
-	public void loadSound(boolean clearCurAudio, String folder, AudioData... dataList) {
-		loadAudio(soundAudio, clearCurAudio, folder, dataList);
+	public void loadSound(boolean clearCurAudio, String folder, String audioType, AudioData... dataList) {
+		loadAudio(soundAudio, clearCurAudio, audioType, folder, dataList);
 	}
 
-	public void loadMusic(boolean clearCurAudio, String folder, AudioData... dataList) {
-		loadAudio(musicAudio, clearCurAudio, folder, dataList);
+	public void loadMusic(boolean clearCurAudio, String folder, String audioType, AudioData... dataList) {
+		loadAudio(musicAudio, clearCurAudio, audioType, folder, dataList);
 	}
 
-	public void loadSound(String folder, AudioData... dataList) {
-		loadAudio(soundAudio, false, folder, dataList);
+	public void loadSound(String folder, String audioType, AudioData... dataList) {
+		loadAudio(soundAudio, false, folder, audioType, dataList);
 	}
 
-	public void loadMusic(String folder, AudioData... dataList) {
-		loadAudio(musicAudio, false, folder, dataList);
+	public void loadMusic(String folder, String audioType, AudioData... dataList) {
+		loadAudio(musicAudio, false, folder, audioType, dataList);
 	}
 
 	private void play(HashMap<String, MediaPlayer> map, String name) {
