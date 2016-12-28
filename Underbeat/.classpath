@@ -5,7 +5,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/SuperIn"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SuperLog"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SuperSerial"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Underbeat Utility"/>
 	<classpathentry kind="lib" path="lib/jars/jinput.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Underbeat/lib/naitive"/>

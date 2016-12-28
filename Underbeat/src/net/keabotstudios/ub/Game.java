@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -20,30 +21,33 @@ import net.keabotstudios.superin.Input;
 import net.keabotstudios.superlog.Logger;
 import net.keabotstudios.superlog.Logger.LogLevel;
 import net.keabotstudios.ub.game.GameInfo;
+import net.keabotstudios.ub.game.gamestate.GameStateManager;
 import net.keabotstudios.ub.game.save.GameSettings;
 import net.keabotstudios.ub.game.save.PlayerInfo;
 import net.keabotstudios.ub.util.Util;
 
 public class Game extends Canvas implements Controllable, Runnable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Thread thread;
 	private boolean running = false;
 	private int fps, ups;
-	
+
 	private Logger logger;
 	private Input input;
-	
+
 	private JFrame frame;
-	private float screenImageScale = 1f;
-	private int fullScreenImageWidth = 0;
-	private int fullScreenImageHeight = 0;
-	private int fullScreenXOff = 0;
-	private int fullScreenYOff = 0;
-	
+	public float screenScale = 1f;
+	public int screenWidth = GameInfo.GAME_WIDTH;
+	public int screenHeight = GameInfo.GAME_HEIGHT;
+	public int screenXOff = 0;
+	public int screenYOff = 0;
+
 	private GameSettings settings;
 	private PlayerInfo playerInfo;
-	
+
+	private GameStateManager gsm;
+
 	public static void main(String[] args) {
 		Logger l = new Logger();
 		GameSettings settings = new GameSettings();
@@ -58,47 +62,57 @@ public class Game extends Canvas implements Controllable, Runnable {
 		}
 		new Game(l, settings, GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice());
 	}
-	
+
 	public Game(Logger logger, GameSettings settings, GraphicsDevice currentDisplay) {
 		this.logger = logger;
 		this.settings = settings;
 		this.playerInfo = new PlayerInfo();
 		playerInfo.updateFromFile();
-		
+
 		Dimension size = new Dimension(GameInfo.GAME_WIDTH, GameInfo.GAME_HEIGHT);
 		setMinimumSize(size);
 		setPreferredSize(size);
 		setMaximumSize(size);
 
 		createJFrame(currentDisplay);
-		
+
 		input = new Input(this, settings.useXInput);
 		input.setInputs(settings.controls);
-		
+
+		gsm = new GameStateManager(this);
+
 		if (settings.fullscreen) {
-			calculateFullscreenBounds(currentDisplay);
+			calculateScreenBounds(currentDisplay);
 		}
-		
+
 		frame.setVisible(true);
 		requestFocus();
 		start();
 	}
-	
-	private void calculateFullscreenBounds(GraphicsDevice display) {
+
+	private void calculateScreenBounds(GraphicsDevice display) {
 		GraphicsDevice gd = display;
-		int screenWidth = gd.getDisplayMode().getWidth();
-		int screenHeight = gd.getDisplayMode().getHeight();
+		int screenDeviceWidth = gd.getDisplayMode().getWidth();
+		int screenDeviceHeight = gd.getDisplayMode().getHeight();
+		if (settings.fullscreen) {
+			screenScale = Util.getScaleOfRectangeInArea(screenDeviceWidth, screenDeviceHeight, GameInfo.GAME_WIDTH, GameInfo.GAME_HEIGHT);
+			screenWidth = (int) (GameInfo.GAME_WIDTH * screenScale);
+			screenHeight = (int) (GameInfo.GAME_HEIGHT * screenScale);
+			screenXOff = (int) ((screenDeviceWidth - screenWidth) / 2.0f);
+			screenYOff = (int) ((screenDeviceHeight - screenHeight) / 2.0f);
+		} else {
+			screenScale = 1f;
+			screenWidth = GameInfo.GAME_WIDTH;
+			screenHeight = GameInfo.GAME_HEIGHT;
+			screenXOff = 0;
+			screenYOff = 0;
+		}
 		Dimension size = new Dimension(screenWidth, screenHeight);
 		setMinimumSize(size);
 		setPreferredSize(size);
 		setMaximumSize(size);
-		screenImageScale = Util.getScaleOfRectangeInArea(screenWidth, screenHeight, GameInfo.GAME_WIDTH, GameInfo.GAME_HEIGHT);
-		fullScreenImageWidth = (int) (GameInfo.GAME_WIDTH * screenImageScale);
-		fullScreenImageHeight = (int) (GameInfo.GAME_HEIGHT * screenImageScale);
-		fullScreenXOff = (int) ((screenWidth - fullScreenImageWidth) / 2.0f);
-		fullScreenYOff = (int) ((screenHeight - fullScreenImageHeight) / 2.0f);
 	}
-	
+
 	private void createJFrame(GraphicsDevice display) {
 		frame = new JFrame();
 		frame.add(this);
@@ -118,21 +132,23 @@ public class Game extends Canvas implements Controllable, Runnable {
 		frame.setTitle(GameInfo.TITLE);
 		frame.setIconImages(GameInfo.WINDOW_ICONS);
 	}
-	
+
 	public void requestFocus() {
 		frame.requestFocus();
 		requestFocusInWindow();
 	}
 
 	public synchronized void start() {
-		if(running) return;
+		if (running)
+			return;
 		running = true;
 		thread = new Thread(this, GameInfo.TITLE + " Game Thread");
 		thread.start();
 	}
-	
+
 	public synchronized void stop() {
-		if(!running) return;
+		if (!running)
+			return;
 		running = false;
 		try {
 			thread.join();
@@ -149,7 +165,7 @@ public class Game extends Canvas implements Controllable, Runnable {
 		double secsPerTick = 1.0 / (double) GameInfo.MAX_UPS;
 
 		init();
-		
+
 		while (running) {
 			long currTime = System.nanoTime();
 			long elapsedTime = currTime - prevTime;
@@ -173,27 +189,25 @@ public class Game extends Canvas implements Controllable, Runnable {
 	}
 
 	private void init() {
-		
+
 	}
 
 	private void update() {
 		GameInfo.update(fps, ups);
 		input.updateControllerInput();
-		System.out.println(input.isKeyboardKeyTyped(KeyEvent.VK_F4));
-		if(input.isKeyboardKeyTyped(KeyEvent.VK_F4)) {
+		if (input.isKeyboardKeyTyped(KeyEvent.VK_F4)) {
 			GraphicsDevice device = frame.getGraphicsConfiguration().getDevice();
 			frame.dispose();
 			settings.fullscreen = !settings.fullscreen;
+			calculateScreenBounds(device);
 			createJFrame(device);
-			
-			if (settings.fullscreen) {
-				calculateFullscreenBounds(device);
-			}
-			
+
 			frame.setVisible(true);
 			requestFocus();
+			input.update();
+			return;
 		}
-		
+		gsm.update(input);
 		input.update();
 	}
 
@@ -203,14 +217,10 @@ public class Game extends Canvas implements Controllable, Runnable {
 			createBufferStrategy(3);
 			return;
 		}
-		Graphics g = bs.getDrawGraphics();
+		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-		if (settings.fullscreen) {
-			
-		} else {
-			
-		}
+		gsm.render(g);
 		g.dispose();
 		bs.show();
 	}

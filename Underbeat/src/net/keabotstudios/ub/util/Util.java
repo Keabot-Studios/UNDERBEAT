@@ -1,9 +1,12 @@
 package net.keabotstudios.ub.util;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
@@ -141,5 +144,27 @@ public class Util {
 			}
 			return null;
 		}
+	}
+	
+	public static class StringUtil {
+
+		public static int getStringHeight(Font f, String s) {
+			AffineTransform affinetransform = new AffineTransform();
+			FontRenderContext frc = new FontRenderContext(affinetransform, true,
+					true);
+			return (int) (f.getStringBounds(s, frc).getHeight());
+		}
+
+		public static int getStringWidth(Font f, String s) {
+			AffineTransform affinetransform = new AffineTransform();
+			FontRenderContext frc = new FontRenderContext(affinetransform, true,
+					true);
+			return (int) (f.getStringBounds(s, frc).getWidth());
+		}
+
+		public static boolean isNumeric(String str) {
+			return str.matches("-?\\d+(\\.\\d+)?");
+		}
+
 	}
 }
