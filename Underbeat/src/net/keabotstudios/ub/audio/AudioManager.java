@@ -16,12 +16,14 @@ public class AudioManager {
 
 	public AudioManager() {
 		new JFXPanel();
+		audio = new HashMap<String, URL>();
 	}
 
 	private HashMap<String, URL> audio;
 
 	public void loadAudio(String folder, String... names) {
 		for (String fileName : names) {
+			System.out.println("Loading Audio: " + "/" + folder + "/" + fileName + ".mp3");
 			audio.put(fileName.toLowerCase(), Game.class.getResource("/" + folder + "/" + fileName + ".mp3"));
 		}
 	}

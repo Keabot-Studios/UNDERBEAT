@@ -32,9 +32,9 @@ public class GameInfo {
 	}
 
 	public static void init(Logger l) {
-		WINDOW_ICONS.add(ImageUtil.loadImage("/icon/dr2x64.png", l));
-		WINDOW_ICONS.add(ImageUtil.loadImage("/icon/dr2x32.png", l));
-		WINDOW_ICONS.add(ImageUtil.loadImage("/icon/dr2x16.png", l));
+		WINDOW_ICONS.add(ImageUtil.loadImage("/textures/icons/icon64.png", l));
+		WINDOW_ICONS.add(ImageUtil.loadImage("/textures/icons/icon32.png", l));
+		WINDOW_ICONS.add(ImageUtil.loadImage("/textures/icons/icon16.png", l));
 		TIME = 0;
 	}
 

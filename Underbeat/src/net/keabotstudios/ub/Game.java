@@ -20,6 +20,7 @@ import net.keabotstudios.superin.Controllable;
 import net.keabotstudios.superin.Input;
 import net.keabotstudios.superlog.Logger;
 import net.keabotstudios.superlog.Logger.LogLevel;
+import net.keabotstudios.ub.audio.AudioManager;
 import net.keabotstudios.ub.game.GameInfo;
 import net.keabotstudios.ub.game.gamestate.GameStateManager;
 import net.keabotstudios.ub.game.save.GameSettings;
@@ -47,6 +48,8 @@ public class Game extends Canvas implements Controllable, Runnable {
 	private PlayerInfo playerInfo;
 
 	private GameStateManager gsm;
+	
+	private AudioManager audioManager;
 
 	public static void main(String[] args) {
 		Logger l = new Logger();
@@ -67,7 +70,14 @@ public class Game extends Canvas implements Controllable, Runnable {
 		this.logger = logger;
 		this.settings = settings;
 		this.playerInfo = new PlayerInfo();
+		this.audioManager = new AudioManager();
 		playerInfo.updateFromFile();
+		
+		audioManager = new AudioManager();
+		audioManager.loadAudio("res/audio", "test");
+		audioManager.play("test", false);
+		
+		GameInfo.init(logger);
 
 		Dimension size = new Dimension(GameInfo.GAME_WIDTH, GameInfo.GAME_HEIGHT);
 		setMinimumSize(size);
@@ -197,6 +207,7 @@ public class Game extends Canvas implements Controllable, Runnable {
 		input.updateControllerInput();
 		if (input.isKeyboardKeyTyped(KeyEvent.VK_F4)) {
 			GraphicsDevice device = frame.getGraphicsConfiguration().getDevice();
+			frame.remove(this);
 			frame.dispose();
 			settings.fullscreen = !settings.fullscreen;
 			calculateScreenBounds(device);
