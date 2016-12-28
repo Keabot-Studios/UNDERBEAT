@@ -177,7 +177,7 @@ public class AudioManager {
 	}
 
 	public void resumeAllAudio() {
-		resumeAllAudioType(musicAudio);
-		resumeAllAudioType(soundAudio);
+		resumeAllMusic();
+		resumeAllSounds();
 	}
 }
