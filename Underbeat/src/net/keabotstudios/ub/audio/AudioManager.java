@@ -124,8 +124,8 @@ public class AudioManager {
 	}
 
 	public void stopAllAudio() {
-		stopAllAudioType(musicAudio);
-		stopAllAudioType(soundAudio);
+		stopAllMusic();
+		stopAllSounds();
 	}
 
 	private void pauseAllAudioType(HashMap<String, MediaPlayer> map) {
@@ -142,8 +142,8 @@ public class AudioManager {
 	}
 
 	public void pauseAllAudio() {
-		pauseAllAudioType(musicAudio);
-		pauseAllAudioType(soundAudio);
+		pauseAllMusic();
+		pauseAllSounds();
 	}
 
 	private void resumeAllAudioType(HashMap<String, MediaPlayer> map) {
